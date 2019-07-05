@@ -1,0 +1,36 @@
+﻿body {
+}
+
+#formCard {
+    background-color: dimgrey;
+    min-height: 30vh;
+    color: white;
+    padding: 5%;
+    border-radius: 15px;
+}
+
+
+#formInicio .form-control {
+    margin: 30px auto;  
+}
+
+    #formInicio h3 {
+        margin: 5px;    
+    }
+
+
+.mainSection {
+    margin-top: 5%;
+}
+
+input:invalid {
+    box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+    box-shadow: none;
+}
+
+.error {
+    color: lightsalmon;
+}
