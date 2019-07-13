@@ -44,5 +44,12 @@ namespace DataLayer
             }
         }
 
+        public List<Producto> SearchProducts(string query){
+            using (var context = new BDProyectoMVCEntities()) {
+                var productos = context.Producto.Where(p => p.nombre.ToLower().Contains(query.ToLower())).ToList();
+                return productos;
+            }
+        }
+
     }
 }

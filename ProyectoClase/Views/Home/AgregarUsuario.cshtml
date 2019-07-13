@@ -1,0 +1,59 @@
+﻿@model ModelLayer.UsuarioModel
+
+@{
+    ViewBag.Title = "AgregarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Agregar Usuario</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Usuario</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @placeholder="Nombre de usuario", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder="Contraseña", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @placeholder="Nombre", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @placeholder="Apellidos", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @placeholder="Fecha de nacimiento", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group">
+                @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @placeholder="E-mail", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 text-right">
+                <input type="submit" value="Crear Usuario" class="btn btn-primary btn-default text-right" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver al inicio", "Index")
+</div>

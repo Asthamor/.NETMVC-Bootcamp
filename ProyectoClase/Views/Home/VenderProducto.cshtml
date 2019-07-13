@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "VenderProducto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/Project/JS/VentaProductos.js")
+}
+
+<h2 class="text-center">VenderProducto</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <select class="form-control"></select>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <label>Vendedor</label>
+            <h4 id="IdVendedor"></h4>
+        </div>
+        <div class="col-sm-6">
+            <label>Folio</label>
+            <h4 id="FolioVenta"></h4>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="form-control">
+            <label for="productSearch">SKU de producto</label>
+            <input type="text" name="productSearch" id="productSearch" />
+        </div>
+        <div class="form-control">
+            <label for="cantidad">Cantidad</label>
+            <input type="text" name="cantidad" id="cantidad" />
+        </div>
+    </div>
+
+</div>
+}
+
+<table class="table table-responsive tab" id="Productos">
+
+</table>
+
+@Html.Hidden("URLProductSuggestions", Url.Action("SearchProduct", "Home"))
+

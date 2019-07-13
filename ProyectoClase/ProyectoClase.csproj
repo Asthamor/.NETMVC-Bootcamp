@@ -243,6 +243,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Project\JS\HomeIndex.js" />
+    <Content Include="Scripts\Project\JS\VentaProductos.js" />
     <Content Include="Scripts\Project\JS\Login.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -260,6 +261,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
+    <Content Include="Views\Home\AgregarProducto.cshtml" />
+    <Content Include="Views\Home\AgregarUsuario.cshtml" />
+    <Content Include="Views\Home\VenderProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

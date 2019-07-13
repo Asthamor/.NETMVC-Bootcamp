@@ -26,6 +26,7 @@ namespace ProyectoClase.Controllers
             UsuarioModel usuario = cdUsuario.ChecarUsuario(dataUsuario);
             if (usuario.Nombre != null)
             {
+                Session["Usuario"] = usuario.Usuario;
                 resultado["Exito"] = true;
                 resultado["Usuario"] = JsonConvert.SerializeObject(usuario);
             }
@@ -38,6 +39,13 @@ namespace ProyectoClase.Controllers
             }
 
             return Content(resultado.ToString());
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+
+            return RedirectToAction("Index", "Login");
         }
     }
 }
