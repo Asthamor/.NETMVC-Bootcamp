@@ -422,6 +422,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\Project\JS\HomeIndex.js" />
+    <Content Include="Scripts\Project\JS\Producto.js" />
     <Content Include="Scripts\Project\JS\Usuario.js" />
     <Content Include="Scripts\Project\JS\VentaProductos.js" />
     <Content Include="Scripts\Project\JS\Login.js" />
@@ -444,6 +445,7 @@
     <Content Include="Views\Producto\AgregarProducto.cshtml" />
     <Content Include="Views\Usuario\AgregarUsuario.cshtml" />
     <Content Include="Views\Venta\VenderProducto.cshtml" />
+    <Content Include="Views\Producto\DetalleDeProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

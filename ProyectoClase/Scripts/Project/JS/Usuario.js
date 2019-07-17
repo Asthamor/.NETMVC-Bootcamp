@@ -38,7 +38,7 @@
             async: true,
             success: successCreateUser,
             error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("error ", data.Error, "");
+                alert("error ", data.Error, "Ocurrió un error al intentar enviar los datos al servidor");
             }
         });
     }

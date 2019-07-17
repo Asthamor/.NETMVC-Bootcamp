@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,17 +27,64 @@ namespace ProyectoClase.Controllers
 
         // POST: Producto/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FormCollection productoData)
         {
-            CD_Producto CdProducto = new CD_Producto();
-            Producto producto = new Producto()
+            var result = new JObject();
+            if (Session["Usuario"] != null)
             {
-                nombre = collection.GetValue("nombre").ToString(),
-            };
-            return View();
+                try
+                {
+                    Producto product = new Producto()
+                    {
+                        nombre = Request.Form["nombre"],
+                        sku = Request.Form["sku"],
+                        stock = Int32.Parse(Request.Form["stock"]),
+                        precio_compra = Decimal.Parse(Request.Form["precio_compra"]),
+                        precio_venta = Decimal.Parse(Request.Form["precio_venta"]),
+                    };
+                    var uploadedImage = Request.Files["imagen"];
+                    if (uploadedImage.ContentLength != 0)
+                    {
+                        product.imagen = new BinaryReader(uploadedImage.InputStream).ReadBytes(uploadedImage.ContentLength);
+                    }
+                    CD_Producto CdProducto = new CD_Producto();
+                    var creado = CdProducto.CrearProducto(product);
+                    if (creado >= 1)
+                    {
+                        result["success"] = true;
+                        result["error"] = false;
+                    }
+                    else
+                    {
+                        result["success"] = true;
+                        result["error"] = "No se guardaron cambios a la base de datos";
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                    result["success"] = false;
+                    result["error"] = "Error de validación";
+                    result["log"] = e.Message;
+                }
+                catch (DbUpdateException e)
+                {
+                    result["success"] = false;
+                }
+
+            }
+            else
+            {
+                result["success"] = false;
+                result["error"] = "No se tienen los permisos necesarios para realizar esta acción";
+            }
+
+
+            return Content(result.ToString());
+
         }
 
-        
+
+
         //GET: Producto/SearchProductByName
         public ActionResult SearchProductByName(string searchParam)
         {
@@ -87,10 +137,12 @@ namespace ProyectoClase.Controllers
             return View();
         }
 
-        // GET: Producto/Details/5
-        public ActionResult Details(int id)
+        // GET: Producto/DetalleDeProducto/5
+        public ActionResult DetalleDeProducto(string id)
         {
-            return View();
+            CD_Producto CdProducto = new CD_Producto();
+            Producto producto = CdProducto.GetProductoBySKU(id);
+            return View(producto);
         }
 
         // GET: Producto/Create

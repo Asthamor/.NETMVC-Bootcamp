@@ -55,11 +55,12 @@ namespace DataLayer
             }
         }
 
-        public Producto AddProducto(Producto producto)
+        public int CrearProducto(Producto producto)
         {
             using (var context = new BDProyectoMVCEntities())
             {
-                var result = context.Producto.Add(producto);
+                var product = context.Producto.Add(producto);
+                var result = context.SaveChanges(); 
                 return result;
             }
             

@@ -23,11 +23,11 @@ namespace DataLayer
         [Required, StringLength(50, MinimumLength = 5)]
         public string usuario1 { get; set; }
 
+        [DataType(DataType.Password)]
         [RegularExpression(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]
         [Required, StringLength(255, MinimumLength = 8)]
         public string password { get; set; }
         [Required, StringLength(100)]
-
         public string nombre { get; set; }
         [Required, StringLength(255)]
 

@@ -11,7 +11,8 @@ namespace DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,12 +20,21 @@ namespace DataLayer
         {
             this.ProductosdeVenta = new HashSet<ProductosdeVenta>();
         }
-    
+        [Required, StringLength(20, MinimumLength = 10)]
         public string sku { get; set; }
+        [Required, StringLength(100)]
         public string nombre { get; set; }
+        
+        [Required]
         public int stock { get; set; }
+        [DataType(DataType.Currency)]
+        [Required]
         public decimal precio_venta { get; set; }
+        [DataType(DataType.Currency)]
+        [Required]
+
         public decimal precio_compra { get; set; }
+
         public byte[] imagen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
