@@ -21,9 +21,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="navbar-link">@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li class="navbar-link">@Html.ActionLink("Agregar Producto", "IrAgregarProducto", "Home")</li>
-                    <li class="navbar-link">@Html.ActionLink("Agregar Usuario", "IrAgregarUsuario", "Home")</li>
-                    <li class="navbar-link">@Html.ActionLink("Vender Producto", "IrVenderProducto", "Home")</li>
+                    <li class="navbar-link">@Html.ActionLink("Agregar Producto", "AgregarProducto", "Producto")</li>
+                    <li class="navbar-link">@Html.ActionLink("Agregar Usuario", "AgregarUsuario", "Usuario")</li>
+                    <li class="navbar-link">@Html.ActionLink("Vender Producto", "VenderProducto", "Venta")</li>
 
 
                     <li class="navbar-link">@Html.ActionLink("Acerca de", "About", "Home")</li>
@@ -46,6 +46,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.min.js")
+    @Styles.Render("~/Content/bootstrap-datepicker.min.css")
     @RenderSection("scripts", required: false)
     @RenderSection("styles", required: false)
 </body>

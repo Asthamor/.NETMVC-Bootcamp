@@ -4,3 +4,9 @@ C:\Users\mauri\source\repos\ProyectoClase\ModelLayer\obj\Debug\ModelLayer.csproj
 C:\Users\mauri\source\repos\ProyectoClase\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
 C:\Users\mauri\source\repos\ProyectoClase\ModelLayer\obj\Debug\ModelLayer.dll
 C:\Users\mauri\source\repos\ProyectoClase\ModelLayer\obj\Debug\ModelLayer.pdb
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\bin\Debug\ModelLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\bin\Debug\ModelLayer.pdb
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Debug\ModelLayer.csprojAssemblyReference.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Debug\ModelLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Debug\ModelLayer.pdb

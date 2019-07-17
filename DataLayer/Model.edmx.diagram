@@ -5,8 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="60df3ccba15c4a4fa570a39e22df21e3" Name="Diagram1">
-        <EntityTypeShape EntityType="BDProyectoMVCModel.Usuario" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BDProyectoMVCModel.Producto" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BDProyectoMVCModel.Producto" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="BDProyectoMVCModel.Usuario" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="BDProyectoMVCModel.Venta" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="BDProyectoMVCModel.ProductosdeVenta" Width="1.5" PointX="5.25" PointY="1.25" />
+        <AssociationConnector Association="BDProyectoMVCModel.ProductosdeVenta_Producto_sku_fk" />
+        <AssociationConnector Association="BDProyectoMVCModel.Venta_Usuario_usuario_fk" />
+        <AssociationConnector Association="BDProyectoMVCModel.ProductosdeVenta_Venta_idVenta_fk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

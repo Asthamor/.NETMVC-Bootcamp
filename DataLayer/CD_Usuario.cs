@@ -1,6 +1,8 @@
-﻿using ModelLayer;
+﻿using Microsoft.Build.Utilities;
+using ModelLayer;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,17 @@ namespace DataLayer
                 }
 
                 return user;
+            }
+        }
+
+        public int CrearUsuario(Usuario usuario)
+        {
+            using(var contexto = new BDProyectoMVCEntities())
+            {
+                    var user = contexto.Usuario.Add(usuario);
+                    var result = contexto.SaveChanges();
+                    return result;
+                    
             }
         }
 

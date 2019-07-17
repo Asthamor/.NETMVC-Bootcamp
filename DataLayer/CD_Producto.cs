@@ -10,6 +10,8 @@ namespace DataLayer
     public class CD_Producto
     {
         public  List<Producto> GetAllProducts() {
+
+            List<Producto> productos = new List<Producto>();
             
             using (var context = new BDProyectoMVCEntities())
             {
@@ -24,7 +26,9 @@ namespace DataLayer
                 }).ToList();
                 return prodModel;
                 */
-                var productos = context.Producto.ToList();
+
+                
+                productos.AddRange(context.Producto.Include("ProductosdeVenta").ToList());
                 return productos;
             }
         }
@@ -49,6 +53,16 @@ namespace DataLayer
                 var productos = context.Producto.Where(p => p.nombre.ToLower().Contains(query.ToLower())).ToList();
                 return productos;
             }
+        }
+
+        public Producto AddProducto(Producto producto)
+        {
+            using (var context = new BDProyectoMVCEntities())
+            {
+                var result = context.Producto.Add(producto);
+                return result;
+            }
+            
         }
 
     }

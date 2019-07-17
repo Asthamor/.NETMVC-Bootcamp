@@ -11,15 +11,38 @@ namespace DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuario()
+        {
+            this.Venta = new HashSet<Venta>();
+        }
+        [Required, StringLength(50, MinimumLength = 5)]
         public string usuario1 { get; set; }
+
+        [RegularExpression(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]
+        [Required, StringLength(255, MinimumLength = 8)]
         public string password { get; set; }
+        [Required, StringLength(100)]
+
         public string nombre { get; set; }
+        [Required, StringLength(255)]
+
         public string apellidos { get; set; }
-        public Nullable<System.DateTime> fechaNacimiento { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? fechaNacimiento { get; set; }
         public Nullable<byte> genero { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Required]
         public string correo { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Venta> Venta { get; set; }
     }
 }
