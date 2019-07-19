@@ -20,6 +20,12 @@
         }
     });
 
+    $("#imagen").fileinput({
+        language: "es",
+        showUpload: false,
+        showClose: false,
+    });
+
     $("#createProductForm").submit((event) => {
         event.preventDefault();
         if (form.valid()) {

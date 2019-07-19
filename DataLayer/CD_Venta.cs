@@ -8,11 +8,14 @@ namespace DataLayer
 {
     public class CD_Venta
     {
-        public Venta RegistrarVenta(Venta venta)
+        public int RegistrarVenta(Venta venta)
         {
-            Venta result = new Venta();
-            return result;
-
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                var ventaCreada = contexto.Venta.Add(venta);
+                var result = contexto.SaveChanges();
+                return result;
+            }
         }
 
         public int GetNextFolio()

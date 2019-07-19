@@ -130,6 +130,57 @@ namespace ProyectoClase.Controllers
             }
         }
 
+        public ActionResult AddProductToCart(string productSKU, int amount)
+        {
+            var result = new JObject();
+            if (Session["Usuario"] != null)
+            {
+                if(Request.Cookies["Carrito"] != null)
+                {
+                    if (Request.Cookies["Carrito"].Value.Length <= 0)
+                    {
+                        var productos = new JObject();
+                        productos.Add($"{productSKU}", amount.ToString());
+                        Response.Cookies["Carrito"].Value = productos.ToString();
+                    }
+                    else
+                    {
+                        var productos = JObject.Parse(Request.Cookies["Carrito"].Value);
+
+                        if (productos.ContainsKey($"{productSKU}"))
+                        {
+                            int cantidad = productos[productSKU].ToObject<int>();
+                            cantidad += amount;
+                            productos[$"{productSKU}"] = amount.ToString();
+                        }
+                        else
+                        {
+                            productos.Add(productSKU, amount.ToString());
+                        }
+                        Response.Cookies["Carrito"].Value = JsonConvert.SerializeObject(productos);
+                    }
+
+                } else
+                {
+                    var productos = new JObject();
+                    productos.Add($"{productSKU}", amount.ToString());
+                    Response.Cookies["Carrito"].Value = productos.ToString();
+                }
+                Response.Cookies["Carrito"].Expires = DateTime.Now.AddDays(1);
+
+
+                result["success"] = true;
+                result["carrito"] = Response.Cookies["Carrito"].Value.ToString();
+            }
+            else
+            {
+                result["success"] = false;
+            }
+            return Content(result.ToString());
+
+
+        }
+
 
         // GET: Producto
         public ActionResult Index()
@@ -140,10 +191,28 @@ namespace ProyectoClase.Controllers
         // GET: Producto/DetalleDeProducto/5
         public ActionResult DetalleDeProducto(string id)
         {
-            CD_Producto CdProducto = new CD_Producto();
-            Producto producto = CdProducto.GetProductoBySKU(id);
-            return View(producto);
+            if (Session["Usuario"] != null)
+            {
+                if (id != null)
+                {
+                    CD_Producto CdProducto = new CD_Producto();
+                    Producto producto = CdProducto.GetProductoBySKU(id);
+                    return View(producto);
+                }
+                else
+                {
+                    return View("Error");
+                }
+                
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+                
         }
+
+        
 
         // GET: Producto/Create
         public ActionResult Create()

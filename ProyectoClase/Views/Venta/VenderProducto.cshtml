@@ -16,19 +16,18 @@
 
 <div class="form-horizontal">
 
-    <div class="form-group">
-        <select class="form-control"></select>
-    </div>
+
+    
 
     <div class="row">
-        <div class="col-sm-6">
-            <label>Vendedor</label>
-            <h4 id="IdVendedor"></h4>
-        </div>
-        <div class="col-sm-6">
-            <label>Folio</label>
-            <h4 id="FolioVenta"></h4>
-        </div>
+        <h4 class="col-sm-6">
+            <label for="usuario">Vendedor:</label>
+            <span name="usuario" id="usuario">@Session["Usuario"]</span>
+        </h4>
+        <h4 class="col-sm-6">
+            <label>Folio:</label>
+            <span id="FolioVenta"></span>
+        </h4>
 
     </div>
 

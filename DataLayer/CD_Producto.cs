@@ -35,7 +35,7 @@ namespace DataLayer
 
         public Producto GetProductoBySKU(string ProductSKU) {
             using (var context = new BDProyectoMVCEntities()) {
-                var producto = context.Producto.First(p => p.sku == ProductSKU);
+                var producto = context.Producto.FirstOrDefault(p => p.sku == ProductSKU);
                 /*ProductModel pm = new ProductModel(){
                  * SKU = producto.sku,
                  * Nombre = producto.nombre,

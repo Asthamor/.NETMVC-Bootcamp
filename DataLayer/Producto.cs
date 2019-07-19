@@ -11,6 +11,7 @@ namespace DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public partial class Producto
@@ -21,20 +22,30 @@ namespace DataLayer
             this.ProductosdeVenta = new HashSet<ProductosdeVenta>();
         }
         [Required, StringLength(20, MinimumLength = 10)]
+        [DisplayName("SKU")]
         public string sku { get; set; }
         [Required, StringLength(100)]
+        [DisplayName("Nombre del Producto")]
+        [DisplayFormat(NullDisplayText = "SIN NOMBRE")]
         public string nombre { get; set; }
         
         [Required]
+        [DisplayName("En stock")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
         public int stock { get; set; }
-        [DataType(DataType.Currency)]
         [Required]
+        [DisplayName("Precio de Venta")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
+        [DataType(DataType.Currency)]
         public decimal precio_venta { get; set; }
-        [DataType(DataType.Currency)]
+        
         [Required]
-
+        [DisplayName("Precio de Compra")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
+        [DataType(DataType.Currency)]
         public decimal precio_compra { get; set; }
-
+        [DisplayName("Imagen del Producto")]
+        [DisplayFormat(NullDisplayText = "Imagen no disponible")]
         public byte[] imagen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

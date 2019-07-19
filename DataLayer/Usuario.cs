@@ -11,6 +11,7 @@ namespace DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public partial class Usuario
@@ -21,16 +22,23 @@ namespace DataLayer
             this.Venta = new HashSet<Venta>();
         }
         [Required, StringLength(50, MinimumLength = 5)]
+        [DisplayName("Nombre de Usuario")]
+        [DisplayFormat(NullDisplayText = "USUARIO NO DISPONIBLE")]
         public string usuario1 { get; set; }
 
+        [DisplayName("Contraseña")]
         [DataType(DataType.Password)]
         [RegularExpression(@"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")]
         [Required, StringLength(255, MinimumLength = 8)]
         public string password { get; set; }
         [Required, StringLength(100)]
+
+        [DisplayName("Nombre")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
         public string nombre { get; set; }
         [Required, StringLength(255)]
-
+        [DisplayName("Apellido(s)")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
         public string apellidos { get; set; }
 
         [DataType(DataType.Date)]
@@ -38,6 +46,8 @@ namespace DataLayer
         public DateTime? fechaNacimiento { get; set; }
         public Nullable<byte> genero { get; set; }
 
+        [DisplayName("E-mail")]
+        [DisplayFormat(NullDisplayText = "No disponible")]
         [DataType(DataType.EmailAddress)]
         [Required]
         public string correo { get; set; }

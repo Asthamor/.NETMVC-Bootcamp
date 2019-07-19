@@ -7,6 +7,8 @@
 
 @section Styles{
     @Styles.Render("~/Content/Project/CSS/HomeIndex.css")
+    @Styles.Render("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css")
+    @Styles.Render("https://use.fontawesome.com/releases/v5.5.0/css/all.css")
 
 }
 
@@ -15,6 +17,10 @@
     @Scripts.Render("~/Scripts/jquery.validate.min.js")
     @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_es.js")
     @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fas/theme.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/locales/es.js")
 }
 
 
@@ -28,38 +34,57 @@
         <h4>Producto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.EditorFor(model => model.sku, new { htmlAttributes = new { @placeholder = "SKU", @class = "form-control", @required = "true", @length = "20", minlength = "10" } })
-            @Html.ValidationMessageFor(model => model.sku, "", new { @class = "text-danger" })
-        </div>
+        <div class="row">
 
-        <div class="form-group ">
-            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @placeholder = "Nombre del Producto", @class = "form-control", @required = "true", @length = "100"} })
-            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group ">
-            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @placeholder = "Stock", type="number", @class = "form-control", @required = "true" , min="1"} })
-            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group ">
-            @Html.EditorFor(model => model.precio_venta, new { htmlAttributes = new { @placeholder = "Precio de Venta", @class = "form-control", @required = "true" , type="number", min="0"} })
-            @Html.ValidationMessageFor(model => model.precio_venta, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group ">
-            @Html.EditorFor(model => model.precio_compra, new { htmlAttributes = new { @placeholder = "Precio de Compra", @class = "form-control", @required = "true" , type="number", min="0"} })
-            @Html.ValidationMessageFor(model => model.precio_compra, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            <input type="file" class="custom-file-input" id="imagen" name="imagen" />
-        </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.sku, new { htmlAttributes = new { @placeholder = "SKU", @class = "form-control", @required = "true", @length = "20", minlength = "10" } })
+                    @Html.ValidationMessageFor(model => model.sku, "", new { @class = "text-danger" })
+                </div>
 
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-right">
-                <input type="submit" value="Agregar Producto" class="btn btn-primary btn-default text-right" />
+                <div class="form-group ">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @placeholder = "Nombre del Producto", @class = "form-control", @required = "true", @length = "100" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group ">
+                    @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @placeholder = "Stock", type = "number", @class = "form-control", @required = "true", min = "1" } })
+                    @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group ">
+                    @Html.EditorFor(model => model.precio_venta, new { htmlAttributes = new { @placeholder = "Precio de Venta", @class = "form-control", @required = "true", type = "number", min = "0" } })
+                    @Html.ValidationMessageFor(model => model.precio_venta, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group ">
+                    @Html.EditorFor(model => model.precio_compra, new { htmlAttributes = new { @placeholder = "Precio de Compra", @class = "form-control", @required = "true", type = "number", min = "0" } })
+                    @Html.ValidationMessageFor(model => model.precio_compra, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mt-2">
+                    <div class="col-md-offset-2 col-md-10 text-right">
+                        <input type="submit" value="Agregar Producto" class="btn btn-primary btn-default text-right" />
+                    </div>
+                </div>
             </div>
+            <div class="col-md-6">
+                <div class="file-loading form-group ">
+                    <input id="imagen" name="imagen" type="file" class="file mb-3" data-browse-on-zone-click="true" data-allowed-file-extensions='["png", "jpg", "jpeg", "svg"]'>
+                    <!--
+                        <input type="file" class="custom-file-input" id="imagen" name="imagen" />
+                    -->
+
+                </div>
+            </div>
+
         </div>
+
+
+
+
+
+
+
+
+
+        
     </div>
 }
 
