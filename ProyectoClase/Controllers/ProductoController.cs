@@ -86,12 +86,23 @@ namespace ProyectoClase.Controllers
 
 
         //GET: Producto/SearchProductByName
-        public ActionResult SearchProductByName(string searchParam)
+        public ActionResult SearchProductByName(string query)
         {
             CD_Producto CdProducto = new CD_Producto();
             var resultado = new JObject();
-            var productos = CdProducto.SearchProducts(searchParam);
-            resultado["suggestions"] = JsonConvert.SerializeObject(productos);
+            var productos = CdProducto.SearchProducts(query);
+            var sugerencias = new JObject();
+
+            foreach (var item in productos)
+            {
+                var temp = new JObject
+                {
+                    { "value", item.nombre },
+                    { "data", item.sku }
+                };
+                sugerencias.Add( new JProperty(item.sku, temp));
+            }
+            resultado["suggestions"] = JsonConvert.SerializeObject(sugerencias);
             return Content(resultado.ToString());
         }
 

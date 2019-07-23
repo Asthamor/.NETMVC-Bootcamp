@@ -6,6 +6,7 @@
 
 @section Scripts {
     @Scripts.Render("~/Scripts/Project/JS/VentaProductos.js")
+    @Scripts.Render("~/Scripts/jquery.autocomplete.js")
 }
 
 <h2 class="text-center">VenderProducto</h2>
@@ -14,40 +15,40 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
 
-    
 
-    <div class="row">
-        <h4 class="col-sm-6">
-            <label for="usuario">Vendedor:</label>
-            <span name="usuario" id="usuario">@Session["Usuario"]</span>
-        </h4>
-        <h4 class="col-sm-6">
-            <label>Folio:</label>
-            <span id="FolioVenta"> #@ViewBag.Folio</span>
-        </h4>
+
+        <div class="row">
+            <h4 class="col-sm-6">
+                <label for="usuario">Vendedor:</label>
+                <span name="usuario" id="usuario">@Session["Usuario"]</span>
+            </h4>
+            <h4 class="col-sm-6">
+                <label>Folio:</label>
+                <span id="FolioVenta"> #@ViewBag.Folio</span>
+            </h4>
+
+        </div>
+
+        <div class="row">
+            <div class="form-control">
+                <label for="productSearch">SKU de producto</label>
+                <input type="text" name="productSearch" id="productSearch" />
+            </div>
+            <div class="form-control">
+                <label for="cantidad">Cantidad</label>
+                <input type="text" name="cantidad" id="cantidad" />
+            </div>
+        </div>
 
     </div>
-
-    <div class="row">
-        <div class="form-control">
-            <label for="productSearch">SKU de producto</label>
-            <input type="text" name="productSearch" id="productSearch" />
-        </div>
-        <div class="form-control">
-            <label for="cantidad">Cantidad</label>
-            <input type="text" name="cantidad" id="cantidad" />
-        </div>
-    </div>
-
-</div>
 }
 
 <hr />
 <div class="row">
-    <div class="container col-sm-12">
+    <div class="container col">
         <table class="table table-responsive tab" id="Productos">
             <thead>
                 <tr>
@@ -60,15 +61,19 @@
                     <th>
                         Precio
                     </th>
-                    <th>Cantidad</th>
-                    <th>Importe</th>
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Importe
+                    </th>
                 </tr>
 
             </thead>
             <tbody id="ProductsTableBody"></tbody>
         </table>
     </div>
-   
+
 </div>
 
 

@@ -1,5 +1,11 @@
 ﻿$(document).ready(() => {
 
+    $("#productSearch").autocomplete({
+        serviceUrl: '/Producto/SearchProductByName',
+        onSelect: function (suggestion) {
+            alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        }
+    });
 
 
     function getProductsCart() {
