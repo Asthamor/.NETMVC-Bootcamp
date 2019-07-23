@@ -1,45 +1,86 @@
 ﻿$(document).ready(() => {
     $("#TopBtn, #BottomBtn").click((event) => {
+        $("#TopBtn, #BottomBtn").prop('disabled', true);
         addProductToCart();
     });
 
+    $("#DelBtn").click(async (event) => {
+        await Swal.fire({
+            title: "Eliminar",
+            text: '¿Eliminar producto permanentemente?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '✔ Sí',
+            cancelButtonText: "✖ No",
+        }).then((result) => {
+            if (result.value) {
+                $("#DelBtn").prop('disabled', true);
+                deleteProduct();
+            } else if (result.dismiss) {
+                return false;
+            }
+        });
+    });
+
+    function deleteProduct() {
+        OpenLoadingModal();
+        var url = $('#DelProduct').val();
+        $.ajax({
+            url: url,
+            type: "POST",
+            async: true,
+            success: succesDeleteUser,
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                CloseLoadingModal();
+                $("#DelBtn").prop('disabled', false);
+                MensajeError("Ocurrió un error al intentar enviar los datos al servidor");
+            }
+        });
+
+    }
+
     function addProductToCart() {
-        console.log("ajax");
+        OpenLoadingModal();
         let url = decodeURIComponent($('#AddToCart').val());
         let urlTemplate = jQuery.validator.format(url);
         url = urlTemplate($("#cantidadInput").val());
-
-        console.log(url);
         $.ajax({
             url: url,
             type: "POST",
             async: true,
             success: successProductAdded,
             error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("error ", data.Error, "Ocurrió un error al intentar añadir el producto");
+                CloseLoadingModal();
+                $("#TopBtn, #BottomBtn").prop('disabled', false);
+                MensajeError("Ocurrió un error al intentar añadir el producto");
             }
         });
     }
 
-    function successProductAdded(data) {
+    function succesDeleteUser(data) {
+        CloseLoadingModal();
+        $("#DelBtn").prop('disabled', false);
         data = JSON.parse(data);
         console.log(data);
         if (data.success) {
-            alert("Producto Añadido");
+            MensajeExito("Producto Eliminado");
         } else {
-            alert("Ocurrió un error al intentar añadir el producto");
-            console.error("Ocurrió un error al intentar añadir el producto");
+            MensajeAdvertencia(data.error);
+            console.warn("Ocurrió un error al intentar eliminar el producto");
         }
     }
 
-    String.format = function () {
-        let s = arguments[0];
-        for (var i = 0; i < arguments.length - 1; i++) {
-            let reg = new RegExp("\\{" + i + "\\}", "gm");
-            s = s.replace(reg, arguments[i + 1]);
+    function successProductAdded(data) {
+        CloseLoadingModal();
+        $("#TopBtn, #BottomBtn").prop('disabled', false);
+        data = JSON.parse(data);
+        console.log(data);
+        if (data.success) {
+            MensajeExito("Producto Añadido");
+        } else {
+            MensajeAdvertencia("Ocurrió un error al intentar eliminar el producto");
+            console.error("Ocurrió un error al intentar añadir el producto");
         }
-
-        return s;
     }
 
 });

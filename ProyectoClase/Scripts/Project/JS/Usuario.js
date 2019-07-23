@@ -18,16 +18,19 @@
 
     $("#createUserForm").submit((event) => {
         event.preventDefault();
+        $("#addUsuarioSubmit").prop('disabled', true);
         if (form.valid()) {
             let data = new FormData(document.querySelector("#createUserForm"));
             createUser(data);
         } else {
+            $("#addUsuarioSubmit").prop('disabled', false);
             validator.showErrors();
         }
         
     })
 
     function createUser(dataUsuario) {
+        OpenLoadingModal();
         var url = $('#URLCreateUser').val();
         $.ajax({
             url: url,
@@ -38,18 +41,24 @@
             async: true,
             success: successCreateUser,
             error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("error ", data.Error, "Ocurrió un error al intentar enviar los datos al servidor");
+                CloseLoadingModal();
+                $("#addUsuarioSubmit").prop('disabled', false);
+                MensajeError("Ocurrió un error al intentar enviar los datos al servidor");
             }
         });
     }
 
     function successCreateUser(data) {
+        CloseLoadingModal();
+        $("#addUsuarioSubmit").prop('disabled', false);
         if (data.success) {
-            alert("Usuario guardado")
+            MensajeExito("Usuario guardado");
         } else {
-            alert(data.error);
-            console.error(data.error);
+            MensajeAdvertencia(data.error);
+            console.warn(data.error);
         }
+        document.querySelector("#createUserForm").reset();
+
     }
 
         

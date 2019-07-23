@@ -18,9 +18,32 @@ namespace ProyectoClase.Controllers
         {
             if (Session["Usuario"] != null)
             {
+                CD_Venta CdVenta = new CD_Venta();
+                ViewBag.Folio = CdVenta.GetNextFolio();
                 return View();
             }
             return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult GetCart()
+        {
+            var carrito = new JObject();
+            if (Session["Usuario"] != null)
+            {
+                CD_Producto CdProducto = new CD_Producto();
+                if (Request.Cookies["Carrito"] != null)
+                {
+                    var productos = JObject.Parse(Server.UrlDecode(Request.Cookies["Carrito"].Value));
+                    foreach (var item in productos)
+                    {
+                        var value = JObject.FromObject(CdProducto.GetProductoBySKU(item.Key));
+                        value.Add("cantidad", item.Value);
+                        carrito.Add(value["sku"].ToString(), value);
+                    }
+                }
+                
+            }
+            return Content(carrito.ToString());
         }
 
 

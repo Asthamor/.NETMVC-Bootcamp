@@ -20,7 +20,19 @@ namespace DataLayer
 
         public int GetNextFolio()
         {
-            return 0;
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                int nextFolio;
+                if (contexto.Venta.Count() >= 1)
+                {
+                    nextFolio = contexto.Venta.Max(u => u.idVenta);
+                }
+                else
+                {
+                    nextFolio = 1;
+                }               
+                return nextFolio;
+            }
         }
 
     }

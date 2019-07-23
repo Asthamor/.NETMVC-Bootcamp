@@ -114,7 +114,6 @@ namespace ProyectoClase.Controllers
                 {
                     resultado["Exito"] = true;
                     resultado["Productos"] = JsonConvert.SerializeObject(productos);
-                    resultado["Advertencia"] = "No se encontraron productos para mostrar";
                 }
                 else if (productos == null)
                 {
@@ -130,12 +129,62 @@ namespace ProyectoClase.Controllers
             }
         }
 
+        public ActionResult GetProductPage(int productsPerPage, int pageNumber)
+        {
+            var resultado = new JObject();
+            if (Session["Usuario"] != null)
+            {
+                try
+                {
+                    CD_Producto CdProducto = new CD_Producto();
+                    var productos = CdProducto.GetPaginaProductos(productsPerPage, pageNumber);
+                    if (productos.Count <= 0)
+                    {
+                        resultado["Exito"] = true;
+                        resultado["Productos"] = JsonConvert.SerializeObject(productos);
+                        resultado["Advertencia"] = "No se encontraron productos para mostrar";
+                    }
+                    else if (productos.Count >= 1)
+                    {
+                        resultado["Exito"] = true;
+                        resultado["Productos"] = JsonConvert.SerializeObject(productos);
+                    }
+                    else if (productos == null)
+                    {
+                        resultado["Exito"] = false;
+                        resultado["Error"] = true;
+                        resultado["Mensaje"] = "Ocurrió un error al recuperar los datos de productos";
+                    }
+                }
+                catch (ObjectDisposedException e)
+                {
+                    resultado["success"] = false;
+                    resultado["log"] = e.InnerException.InnerException.Message;
+                    resultado["error"] = "Error en la transferencia de datos";
+                }
+                catch (InvalidOperationException e)
+                {
+                    resultado["success"] = false;
+                    resultado["log"] = e.InnerException.InnerException.Message;
+                    resultado["error"] = "La operación no se pudo completar";
+                }
+
+            }
+            else
+            {
+                resultado["success"] = false;
+                resultado["error"] = "No se tienen los permisos necesarios para realizar esta acción";
+            }
+
+            return Content(resultado.ToString());
+        }
+
         public ActionResult AddProductToCart(string productSKU, int amount)
         {
             var result = new JObject();
             if (Session["Usuario"] != null)
             {
-                if(Request.Cookies["Carrito"] != null)
+                if (Request.Cookies["Carrito"] != null)
                 {
                     if (Request.Cookies["Carrito"].Value.Length <= 0)
                     {
@@ -145,22 +194,25 @@ namespace ProyectoClase.Controllers
                     }
                     else
                     {
-                        var productos = JObject.Parse(Request.Cookies["Carrito"].Value);
+                        
+                        var productos = JObject.Parse(Server.UrlDecode(Request.Cookies["Carrito"].Value));
 
                         if (productos.ContainsKey($"{productSKU}"))
                         {
                             int cantidad = productos[productSKU].ToObject<int>();
                             cantidad += amount;
-                            productos[$"{productSKU}"] = amount.ToString();
+                            productos[$"{productSKU}"] = cantidad.ToString();
                         }
                         else
                         {
                             productos.Add(productSKU, amount.ToString());
                         }
-                        Response.Cookies["Carrito"].Value = JsonConvert.SerializeObject(productos);
+                        Response.Cookies["Carrito"].Value = productos.ToString();
+                        //Response.Cookies["Carrito"].Value = JsonConvert.SerializeObject(productos, new JsonSerializerSettings { Formatting = Formatting.None });
                     }
 
-                } else
+                }
+                else
                 {
                     var productos = new JObject();
                     productos.Add($"{productSKU}", amount.ToString());
@@ -193,9 +245,10 @@ namespace ProyectoClase.Controllers
         {
             if (Session["Usuario"] != null)
             {
-                if (id != null)
+                CD_Producto CdProducto = new CD_Producto();
+
+                if (id != null && CdProducto.ExisteProducto(id))
                 {
-                    CD_Producto CdProducto = new CD_Producto();
                     Producto producto = CdProducto.GetProductoBySKU(id);
                     return View(producto);
                 }
@@ -203,67 +256,80 @@ namespace ProyectoClase.Controllers
                 {
                     return View("Error");
                 }
-                
+
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
-                
-        }
 
-        
-
-        // GET: Producto/Create
-        public ActionResult Create()
-        {
-            return View();
         }
 
 
-
-        // GET: Producto/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Producto/Edit/5
+        //POST: Producto/Delete/productSKU
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Delete(string productSKU)
         {
-            try
+            var result = new JObject();
+            if (Session["Usuario"] != null)
             {
-                // TODO: Add update logic here
+                try
+                {
+                    CD_Producto CdProducto = new CD_Producto();
+                    var eliminado = CdProducto.BorrarProducto(productSKU);
+                    if (eliminado >= 1)
+                    {
+                        result["success"] = true;
+                        result["error"] = false;
+                    }
+                    else
+                    {
+                        result["success"] = true;
+                        result["error"] = "No se guardaron cambios a la base de datos";
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                    result["success"] = false;
+                    result["error"] = "Error de validación";
+                    result["log"] = e.Message;
+                }
+                catch (DbUpdateException e)
+                {
+                    result["success"] = false;
 
-                return RedirectToAction("Index");
+                    if (e.InnerException.InnerException.Message.Contains("Violation of PRIMARY KEY"))
+                    {
+                        result["log"] = e.InnerException.InnerException.Message;
+                        result["error"] = "El producto no existe";
+                    }
+                    else
+                    {
+                        result["log"] = e.InnerException.InnerException.Message;
+                        result["error"] = "No se pudo eliminar el producto";
+                    }
+
+
+                }
+                catch (ObjectDisposedException e)
+                {
+                    result["success"] = false;
+                    result["log"] = e.InnerException.InnerException.Message;
+                    result["error"] = "Error en la transferencia de datos";
+                }
+                catch (InvalidOperationException e)
+                {
+                    result["success"] = false;
+                    result["log"] = e.Message;
+                    result["error"] = "La operación no se pudo completar";
+                }
             }
-            catch
+            else
             {
-                return View();
+                result["success"] = false;
+                result["error"] = "No se tienen los permisos necesarios para realizar esta acción";
             }
-        }
-
-        // GET: Producto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Producto/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return Content(result.ToString());
         }
     }
 }

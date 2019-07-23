@@ -34,7 +34,7 @@ namespace ProyectoClase.Controllers
             {
                 resultado["Exito"] = false;
                 resultado["Error"] = true;
-                resultado["Mensaje"] = "Intruder alert";
+                resultado["Advertencia"] = "El usuario o contraseña son incorrectos";
 
             }
 

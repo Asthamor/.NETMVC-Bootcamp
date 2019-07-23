@@ -4,14 +4,16 @@
 @section Styles{
     @Styles.Render("~/Content/css/jquery.dataTables.min.css")
     @Styles.Render("~/Content/datatables.extensions/Scroller/css/dataTables.scroller.css")
-    @Styles.Render("~/Content/datatables.extensions/Responsive/css/dataTables.responsive.css") 
+    @Styles.Render("~/Content/datatables.extensions/Responsive/css/dataTables.responsive.css")
     @Styles.Render("~/Content/datatables.extensions/FixedHeader/css/dataTables.fixedHeader.min.css")
     @Styles.Render("~/Content/Project/CSS/HomeIndex.css")
 }
 
 @section Scripts {
-    @Scripts.Render("~/Scripts/Project/JS/HomeIndex.js")
     @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/Project/JS/HomeIndex.js")
+
 }
 
 <div class="row">
@@ -23,6 +25,9 @@
                 <th scope="col">Stock</th>
                 <th scope="col">Precio de Venta</th>
                 <th scope="col">Precio de Compra</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Eliminar</th>
+
             </tr>
         </thead>
 
@@ -31,4 +36,6 @@
 </div>
 
 @Html.Hidden("URLProducts", Url.Action("GetProducts", "Producto"))
+@Html.Hidden("URLViewProductDetail", Url.Action("DetalleDeProducto", "Producto"))
+@Html.Hidden("URLDeleteProduct", Url.Action("Delete", "Producto", new { productSKU = "{0}"}))
 

@@ -1,10 +1,12 @@
 ﻿$(document).ready(() => {
     $("#formInicio").submit((event) => {
         event.preventDefault();
+        console.log("submited");
         let userData = {
             Usuario: $("#nomUser").val(),
             Password: $("#userPass").val(),
         }
+        $("#loginbtn").prop('disabled', true);
         login(userData);
     });
 
@@ -19,7 +21,7 @@
             async: true,
             success: SuccessLlamadaIniciarSesion,
             error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("error ", data.Mensaje, "verificar info");
+                MensajeError("No se pudo conectar con el servidor");
             }
         });
 
@@ -31,12 +33,12 @@
             window.location.href = url;
         }
         else if (data.Advertencia) {
-            alert("advertencia");
-
+            MensajeAdvertencia(data.Advertencia);
+            $("#loginbtn").prop('disabled', false);
         }
         else {
-            alert(data.Mensaje
-            );
+            MensajeError(data.Error);
+            $("#loginbtn").prop('disabled', false);
         }
     }
 

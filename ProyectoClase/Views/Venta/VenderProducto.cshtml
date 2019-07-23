@@ -26,7 +26,7 @@
         </h4>
         <h4 class="col-sm-6">
             <label>Folio:</label>
-            <span id="FolioVenta"></span>
+            <span id="FolioVenta"> #@ViewBag.Folio</span>
         </h4>
 
     </div>
@@ -45,9 +45,36 @@
 </div>
 }
 
-<table class="table table-responsive tab" id="Productos">
+<hr />
+<div class="row">
+    <div class="container col-sm-12">
+        <table class="table table-responsive tab" id="Productos">
+            <thead>
+                <tr>
+                    <th>
+                        SKU
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>Cantidad</th>
+                    <th>Importe</th>
+                </tr>
 
-</table>
+            </thead>
+            <tbody id="ProductsTableBody"></tbody>
+        </table>
+    </div>
+   
+</div>
+
+
+@Html.Hidden("URLCart", Url.Action("GetCart", "Venta"))
+
+@Html.Hidden("URLCheckout", Url.Action("Checkout", "Venta"))
 
 @Html.Hidden("URLProductSuggestions", Url.Action("SearchProduct", "Home"))
 

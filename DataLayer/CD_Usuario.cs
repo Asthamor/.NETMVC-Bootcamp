@@ -47,5 +47,26 @@ namespace DataLayer
             }
         }
 
+        public int BorrarUsuario(Usuario usuario)
+        {
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                var user = contexto.Usuario.Remove(usuario);
+                var result = contexto.SaveChanges();
+                return result;
+            }
+        }
+
+        public int BorrarUsuario(string nombreUsuario)
+        {
+            using(var contexto = new BDProyectoMVCEntities())
+            {
+                var user = contexto.Usuario.Where(u => u.usuario1 == nombreUsuario).First();
+                contexto.Usuario.Remove(user);
+                var result = contexto.SaveChanges();
+                return result;
+            }
+        }
+
     }
 }

@@ -12,71 +12,74 @@
 }
 
 <h1>@Model.nombre - @Html.DisplayNameFor(m => m.sku)#@Html.DisplayFor(m => m.sku)</h1>
-<h2>Detalle del Producto </h2>
+<h3 class="text-muted">Detalle del Producto </h3>
 
 <div>
-    <h4>Producto</h4>
+    <hr />
+
     <button class="btn btn-success btn-block btnAddToCart" id="TopBtn">
         <span class="glyphicon glyphicon-shopping-cart"></span>
         Agregar al Carrito
     </button>
-    <div class="form-group">
-        <label for="cantidad">Cantidad:</label>
-        <input class="form-control" type="number" value="1" min="1" max="@Model.stock" id="cantidadInput" name="cantidad" />
-    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.nombre)
+                </dt>
 
-    <hr />
-    <div class="col-md-6">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.nombre)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.nombre)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.nombre)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.stock)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.stock)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.stock)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.stock)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.precio_venta)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.precio_venta)
-            </dt>
+                <dd>
+                    $@Html.DisplayFor(model => model.precio_venta)
+                </dd>
 
-            <dd>
-                $@Html.DisplayFor(model => model.precio_venta)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.precio_compra)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.precio_compra)
-            </dt>
+                <dd>
+                    $@Html.DisplayFor(model => model.precio_compra)
+                </dd>
+            </dl>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input class="form-control" type="number" value="1" min="1" max="@Model.stock" id="cantidadInput" name="cantidad" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            @{
+                string imgSrc;
+                if (Model.imagen != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.imagen);
+                    imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+                else
+                {
+                    imgSrc = Url.Content("~/Content/images/nopic_homebox.png");
+                }
 
-            <dd>
-                $@Html.DisplayFor(model => model.precio_compra)
-            </dd>
-        </dl>
-    </div>
-    <div class="col-md-6">
-        @{
-            string imgSrc;
-            if (Model.imagen != null)
-            {
-                var base64 = Convert.ToBase64String(Model.imagen);
-                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
             }
-            else
-            {
-                imgSrc = Url.Content("~/Content/images/nopic_homebox.png");
-            }
-
-        }
-        <img class="img-responsive img-thumbnail img-rounded" src="@imgSrc" />
+            <img class="img-responsive img-thumbnail img-rounded" src="@imgSrc" />
+        </div>
     </div>
+
+
     <hr />
 
     <div class="row">
@@ -85,9 +88,16 @@
             Agregar al Carrito
         </button>
     </div>
-
+    <hr />
+    <div class="row">
+        <button class="btn btn-danger btn-block" id="DelBtn">
+            <span class="glyphicon glyphicon-trash"></span>
+            Eliminar Producto
+        </button>
+    </div>
 </div>
 
 <p>
-    @Html.Hidden("AddToCart", Url.Action("AddProductToCart", "Producto", new { productSKU = Model.sku, amount = "{0}" }));
+    @Html.Hidden("AddToCart", Url.Action("AddProductToCart", "Producto", new { productSKU = Model.sku, amount = "{0}" }))
+    @Html.Hidden("DelProduct", Url.Action("Delete", "Producto", new { productSKU = Model.sku }))
 </p>

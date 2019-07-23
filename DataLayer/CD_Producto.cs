@@ -35,7 +35,7 @@ namespace DataLayer
 
         public Producto GetProductoBySKU(string ProductSKU) {
             using (var context = new BDProyectoMVCEntities()) {
-                var producto = context.Producto.FirstOrDefault(p => p.sku == ProductSKU);
+                var producto = context.Producto.Include("ProductosdeVenta").FirstOrDefault(p => p.sku == ProductSKU);
                 /*ProductModel pm = new ProductModel(){
                  * SKU = producto.sku,
                  * Nombre = producto.nombre,
@@ -65,6 +65,49 @@ namespace DataLayer
             }
             
         }
+        public bool ExisteProducto(string productSKU)
+        {
+            using (var context = new BDProyectoMVCEntities())
+            {
+                var product = context.Producto.Find(productSKU);
+                if (product != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public int BorrarProducto(Producto producto)
+        {
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                var product = contexto.Producto.Remove(producto);
+                var result = contexto.SaveChanges();
+                return result;
+            }
+        }
+
+        public int BorrarProducto(string productSKU)
+        {
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                var product = contexto.Producto.Where(u => u.sku == productSKU).First();
+                contexto.Producto.Remove(product);
+                var result = contexto.SaveChanges();
+                return result;
+            }
+        }
+
+        public List<Producto> GetPaginaProductos(int productsPerPage, int pageNumber)
+        {
+            using (var contexto = new BDProyectoMVCEntities())
+            {
+                var products = contexto.Producto.Skip((pageNumber * productsPerPage)).Take(productsPerPage).ToList();
+                return products;
+            }
+        }
+
 
     }
 }
