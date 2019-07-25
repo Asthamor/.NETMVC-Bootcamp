@@ -1,5 +1,4 @@
 ﻿using Microsoft.Build.Utilities;
-using ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -11,25 +10,15 @@ namespace DataLayer
 {
     public class CD_Usuario
     {
-        public UsuarioModel ChecarUsuario(UsuarioModel user)
+        public Usuario ChecarUsuario(Usuario user)
         {
-            using (var contexto = new BDProyectoMVCEntities()) {
-                int Existe = contexto.Usuario.Where(u => u.usuario1 == user.Usuario && u.password == user.Password).Count();
+            using (var contexto = new BDProyecto()) {
+                int Existe = contexto.Usuario.Where(u => u.usuario1 == user.usuario1 && u.password == user.password).Count();
 
                 if (Existe > 0)
                 {
-                    user = contexto.Usuario.Where(
-                        u => u.usuario1 == user.Usuario && u.password == user.Password)
-                        .Select(usu => new UsuarioModel()
-                        {
-                            Usuario = usu.usuario1,
-                            Password = usu.password,
-                            Apellidos = usu.apellidos,
-                            Nombre = usu.nombre,
-                            Correo = usu.correo,
-                            FechaNacimiento = usu.fechaNacimiento,
-                            Genero = usu.genero
-                        }).FirstOrDefault();
+                    user = contexto.Usuario.Include("Venta").Where(u => u.usuario1 == user.usuario1 && u.password == user.password).FirstOrDefault();
+                       
                 }
 
                 return user;
@@ -38,7 +27,7 @@ namespace DataLayer
 
         public int CrearUsuario(Usuario usuario)
         {
-            using(var contexto = new BDProyectoMVCEntities())
+            using(var contexto = new BDProyecto())
             {
                     var user = contexto.Usuario.Add(usuario);
                     var result = contexto.SaveChanges();
@@ -49,7 +38,7 @@ namespace DataLayer
 
         public int BorrarUsuario(Usuario usuario)
         {
-            using (var contexto = new BDProyectoMVCEntities())
+            using (var contexto = new BDProyecto())
             {
                 var user = contexto.Usuario.Remove(usuario);
                 var result = contexto.SaveChanges();
@@ -59,7 +48,7 @@ namespace DataLayer
 
         public int BorrarUsuario(string nombreUsuario)
         {
-            using(var contexto = new BDProyectoMVCEntities())
+            using(var contexto = new BDProyecto())
             {
                 var user = contexto.Usuario.Where(u => u.usuario1 == nombreUsuario).First();
                 contexto.Usuario.Remove(user);

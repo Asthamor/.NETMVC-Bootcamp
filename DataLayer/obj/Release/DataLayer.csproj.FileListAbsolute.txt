@@ -1,0 +1,14 @@
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\DataLayer.dll.config
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\DataLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\DataLayer.pdb
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\EntityFramework.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\ModelLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\ModelLayer.pdb
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\EntityFramework.xml
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Release\DataLayer.csprojAssemblyReference.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Release\DataLayer.csproj.CoreCompileInputs.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Release\DataLayer.csproj.CopyComplete
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Release\DataLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Release\DataLayer.pdb

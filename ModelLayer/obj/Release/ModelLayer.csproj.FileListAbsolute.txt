@@ -1,0 +1,6 @@
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\bin\Release\ModelLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\bin\Release\ModelLayer.pdb
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Release\ModelLayer.csprojAssemblyReference.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Release\ModelLayer.csproj.CoreCompileInputs.cache
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Release\ModelLayer.dll
+C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\ModelLayer\obj\Release\ModelLayer.pdb

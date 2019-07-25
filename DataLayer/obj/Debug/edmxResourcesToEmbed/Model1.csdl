@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDProyectoMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="sku" />
+    </Key>
+    <Property Name="sku" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="precio_venta" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="precio_compra" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="ProductosdeVenta" Relationship="Self.ProductosdeVenta_Producto_sku_fk" FromRole="Producto" ToRole="ProductosdeVenta" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="usuario1" />
+    </Key>
+    <Property Name="usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellidos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fechaNacimiento" Type="DateTime" Precision="3" />
+    <Property Name="genero" Type="Byte" />
+    <Property Name="correo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Venta" Relationship="Self.Venta_Usuario_usuario_fk" FromRole="Usuario" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario_vendedor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cliente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.Venta_Usuario_usuario_fk" FromRole="Venta" ToRole="Usuario" />
+    <NavigationProperty Name="ProductosdeVenta" Relationship="Self.ProductosdeVenta_Venta_idVenta_fk" FromRole="Venta" ToRole="ProductosdeVenta" />
+  </EntityType>
+  <EntityType Name="ProductosdeVenta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+      <PropertyRef Name="sku" />
+      <PropertyRef Name="cantidad" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" />
+    <Property Name="sku" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Producto" Relationship="Self.ProductosdeVenta_Producto_sku_fk" FromRole="ProductosdeVenta" ToRole="Producto" />
+    <NavigationProperty Name="Venta" Relationship="Self.ProductosdeVenta_Venta_idVenta_fk" FromRole="ProductosdeVenta" ToRole="Venta" />
+  </EntityType>
+  <Association Name="ProductosdeVenta_Producto_sku_fk">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductosdeVenta" Type="Self.ProductosdeVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="sku" />
+      </Principal>
+      <Dependent Role="ProductosdeVenta">
+        <PropertyRef Name="sku" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Venta_Usuario_usuario_fk">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="usuario1" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="usuario_vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductosdeVenta_Venta_idVenta_fk">
+    <End Role="Venta" Type="Self.Venta" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductosdeVenta" Type="Self.ProductosdeVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="ProductosdeVenta">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDProyectoMVCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="Venta" EntityType="Self.Venta" />
+    <EntitySet Name="ProductosdeVenta" EntityType="Self.ProductosdeVenta" />
+    <AssociationSet Name="ProductosdeVenta_Producto_sku_fk" Association="Self.ProductosdeVenta_Producto_sku_fk">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="ProductosdeVenta" EntitySet="ProductosdeVenta" />
+    </AssociationSet>
+    <AssociationSet Name="Venta_Usuario_usuario_fk" Association="Self.Venta_Usuario_usuario_fk">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="ProductosdeVenta_Venta_idVenta_fk" Association="Self.ProductosdeVenta_Venta_idVenta_fk">
+      <End Role="Venta" EntitySet="Venta" />
+      <End Role="ProductosdeVenta" EntitySet="ProductosdeVenta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -17,8 +17,6 @@ C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\DataLayer.dll
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\DataLayer.pdb
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\EntityFramework.dll
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\ModelLayer.dll
-C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\ModelLayer.pdb
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\EntityFramework.xml
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\mauri\Source\Repos\.NETMVC-Bootcamp\DataLayer\obj\Debug\DataLayer.csprojAssemblyReference.cache

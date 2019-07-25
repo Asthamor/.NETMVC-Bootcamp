@@ -10,7 +10,7 @@ namespace DataLayer
     {
         public int RegistrarVenta(Venta venta)
         {
-            using (var contexto = new BDProyectoMVCEntities())
+            using (var contexto = new BDProyecto())
             {
                 var ventaCreada = contexto.Venta.Add(venta);
                 var result = contexto.SaveChanges();
@@ -20,7 +20,7 @@ namespace DataLayer
 
         public int GetNextFolio()
         {
-            using (var contexto = new BDProyectoMVCEntities())
+            using (var contexto = new BDProyecto())
             {
                 int nextFolio;
                 if (contexto.Venta.Count() >= 1)

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDProyectoMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="sku" />
+    </Key>
+    <Property Name="sku" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="precio_venta" Type="money" Nullable="false" />
+    <Property Name="precio_compra" Type="money" Nullable="false" />
+    <Property Name="imagen" Type="image" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BDProyectoMVC.dbo.ProductosdeVenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ProductosdeVenta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+      <PropertyRef Name="sku" />
+      <PropertyRef Name="cantidad" />
+    </Key>
+    <Property Name="idVenta" Type="int" Nullable="false" />
+    <Property Name="sku" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="usuario" />
+    </Key>
+    <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="apellidos" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="fechaNacimiento" Type="datetime" />
+    <Property Name="genero" Type="tinyint" />
+    <Property Name="correo" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario_vendedor" Type="varchar" MaxLength="50" />
+    <Property Name="cliente" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ProductosdeVenta_Producto_sku_fk">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductosdeVenta" Type="Self.ProductosdeVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="sku" />
+      </Principal>
+      <Dependent Role="ProductosdeVenta">
+        <PropertyRef Name="sku" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductosdeVenta_Venta_idVenta_fk">
+    <End Role="Venta" Type="Self.Venta" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductosdeVenta" Type="Self.ProductosdeVenta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="ProductosdeVenta">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Venta_Usuario_usuario_fk">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="usuario" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="usuario_vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDProyectoMVCModelStoreContainer">
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductosdeVenta" EntityType="Self.ProductosdeVenta" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ProductosdeVenta].[idVenta] AS [idVenta], 
+    [ProductosdeVenta].[sku] AS [sku], 
+    [ProductosdeVenta].[cantidad] AS [cantidad]
+    FROM [dbo].[ProductosdeVenta] AS [ProductosdeVenta]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="ProductosdeVenta_Producto_sku_fk" Association="Self.ProductosdeVenta_Producto_sku_fk">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="ProductosdeVenta" EntitySet="ProductosdeVenta" />
+    </AssociationSet>
+    <AssociationSet Name="ProductosdeVenta_Venta_idVenta_fk" Association="Self.ProductosdeVenta_Venta_idVenta_fk">
+      <End Role="Venta" EntitySet="Venta" />
+      <End Role="ProductosdeVenta" EntitySet="ProductosdeVenta" />
+    </AssociationSet>
+    <AssociationSet Name="Venta_Usuario_usuario_fk" Association="Self.Venta_Usuario_usuario_fk">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
